@@ -170,15 +170,17 @@ void grad_to_dp(Mat grad, Mat dp)
     }
 }
 
-int main()
+int main(int argc, char **argv)
 {
-    // const char *file_path = "Broadway_tower_edit.jpg";
-    const char *file_path = "Lena_512.png";
+    if (argc != 2) {
+        fprintf(stderr, "Invalied arguments\nUsage: %s <filename>\n", argv[0]);
+        return 1;
+    }
 
     int width_, height_;
-    uint32_t *pixels_ = (uint32_t*)stbi_load(file_path, &width_, &height_, NULL, 4);
+    uint32_t *pixels_ = (uint32_t*)stbi_load(argv[1], &width_, &height_, NULL, 4);
     if (pixels_ == NULL) {
-        fprintf(stderr, "ERROR: could not read %s\n", file_path);
+        fprintf(stderr, "ERROR: could not read %s\n", argv[1]);
         return 1;
     }
     Img img = {
